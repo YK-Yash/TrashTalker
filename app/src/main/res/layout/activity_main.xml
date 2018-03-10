@@ -18,6 +18,18 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.gkravas.meterview.MeterView
+        android:id="@+id/meter_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:meter_min_value="0"
+        app:meter_max_value="200"
+        app:meter_logo="@drawable/meter_background"
+        app:meter_faceColor="@color/colorAccent"
+        app:meter_scaleColor="@color/colorPrimaryDark"
+        app:meter_rimColor="@color/colorPrimary"
+        app:meter_valueColor="@android:color/holo_red_dark"/>
+
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="0dp"
