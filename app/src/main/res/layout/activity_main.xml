@@ -7,29 +7,6 @@
     android:layout_height="match_parent"
     tools:context="com.example.android.trashtalker.MainActivity">
 
-    <TextView
-        android:id="@+id/message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:text="@string/title_home"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.gkravas.meterview.MeterView
-        android:id="@+id/meter_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:meter_min_value="0"
-        app:meter_max_value="200"
-        app:meter_logo="@drawable/meter_background"
-        app:meter_faceColor="@color/colorAccent"
-        app:meter_scaleColor="@color/colorPrimaryDark"
-        app:meter_rimColor="@color/colorPrimary"
-        app:meter_valueColor="@android:color/holo_red_dark"/>
-
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="0dp"
@@ -41,5 +18,20 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/navigation" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_pages"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>
