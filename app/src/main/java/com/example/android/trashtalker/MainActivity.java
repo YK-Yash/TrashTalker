@@ -1,5 +1,6 @@
 package com.example.android.trashtalker;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -7,37 +8,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.gkravas.meterview.MeterView;
-
-import java.util.Random;
-
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-import com.gkravas.meterview.MeterView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
-
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
+import pl.pawelkleczkowski.customgauge.CustomGauge;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
-    private MeterView meterView;
     FirebaseDatabase db;
     DatabaseReference reference;
     int sensor_reading;
-
+    CustomGauge methane_gauge;
+    TextView methane_status_textview, methane_value_textview;
+    private TextView mTextMessage;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -63,8 +49,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-        meterView = findViewById(R.id.meter_view);
+        methane_gauge = findViewById(R.id.methane_gauge);
+        methane_gauge.setStrokeColor(Color.WHITE);
+        methane_status_textview = findViewById(R.id.methane_status_textview);
+        methane_value_textview = findViewById(R.id.methane_value_textview);
+        mTextMessage = findViewById(R.id.message);
 
         db = FirebaseDatabase.getInstance();
         reference = db.getReferenceFromUrl("https://myapplication-d680d.firebaseio.com/Gas_Readings/MQ135");
@@ -74,10 +63,21 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 try {
                     sensor_reading = dataSnapshot.getValue(Integer.class);
+                    if (sensor_reading > 50) {
+                        methane_gauge.setPointStartColor(Color.YELLOW);
+                        methane_status_textview.setBackgroundColor(Color.YELLOW);
+                        if (sensor_reading > 75)
+                            methane_gauge.setPointStartColor(Color.RED);
+                        methane_status_textview.setBackgroundColor(Color.RED);
+                    } else {
+                        methane_gauge.setPointStartColor(Color.GREEN);
+                        methane_status_textview.setBackgroundColor(Color.GREEN);
+                    }
                     //int reading = Integer.valueOf(sensor_reading);
-                    meterView.setValue(sensor_reading);
+                    methane_gauge.setValue(sensor_reading);
+                    methane_value_textview.setText("" + sensor_reading);
                 }catch (Exception e){
-                    meterView.setValue(20);
+                    e.printStackTrace();
                 }
             }
 
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
@@ -95,24 +95,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-//        final float min = 0;
-//        final float max = 54;
-//        final Random random = new Random();
-//
-//        Observable.interval(500, TimeUnit.MILLISECONDS)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .map(new Func1<Long, Float>() {
-//                    @Override
-//                    public Float call(Long aLong) {
-//                        return min + (random.nextFloat() * (max - min));
-//                    }
-//                })
-//                .subscribe(new Action1<Float>() {
-//                    @Override
-//                    public void call(Float value) {
-//                        meterView.setValue(value);
-//                    }
-//                });
 
     }
 }
