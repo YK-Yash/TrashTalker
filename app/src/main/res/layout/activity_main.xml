@@ -7,62 +7,6 @@
     android:layout_height="match_parent"
     tools:context="com.example.android.trashtalker.MainActivity">
 
-    <android.support.v7.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@android:color/white"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <pl.pawelkleczkowski.customgauge.CustomGauge
-                    android:id="@+id/methane_gauge"
-                    android:layout_width="240dp"
-                    android:layout_height="240dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:padding="16dp"
-                    app:gaugeEndValue="100"
-                    app:gaugeStartAngle="135"
-                    app:gaugeStartValue="0"
-                    app:gaugeStrokeWidth="8dp"
-                    app:gaugeSweepAngle="270" />
-
-                <TextView
-                    android:id="@+id/methane_value_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:fontFamily="sans-serif-thin"
-                    android:textSize="72sp" />
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/methane_status_textview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:gravity="center"
-                android:padding="8dp"
-                android:text="Dangerous Levels"
-                android:textColor="@android:color/white"
-                android:textSize="24sp" />
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
