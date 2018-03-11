@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.example.android.trashtalker.Fragments.DashBoardFragment;
-import com.example.android.trashtalker.Fragments.SecondFragment;
+import com.example.android.trashtalker.Fragments.HomeFragment;
 import com.example.android.trashtalker.Fragments.ThirdFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,10 +31,10 @@ public class MainActivity extends AppCompatActivity {
                         Fragment selectedFragment = null;
                         switch (item.getItemId()) {
                             case R.id.navigation_home:
-                                selectedFragment = DashBoardFragment.newInstance();
+                                selectedFragment = HomeFragment.newInstance();
                                 break;
                             case R.id.navigation_dashboard:
-                                selectedFragment = SecondFragment.newInstance();
+                                selectedFragment = DashBoardFragment.newInstance();
                                 break;
                             case R.id.navigation_notifications:
                                 selectedFragment = ThirdFragment.newInstance();
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Manually displaying the first fragment - one time only
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, DashBoardFragment.newInstance());
+        transaction.replace(R.id.container, HomeFragment.newInstance());
         transaction.commit();
 
     }
