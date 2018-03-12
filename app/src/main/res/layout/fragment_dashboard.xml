@@ -107,7 +107,7 @@
 
                 <TextView
                     android:id="@+id/cotxt"
-                    android:layout_width="60dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Carbon Dioxide"
@@ -115,7 +115,7 @@
 
                 <TextView
                     android:id="@+id/methtxt"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Methane"
