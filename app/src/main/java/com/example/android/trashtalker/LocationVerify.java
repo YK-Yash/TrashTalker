@@ -84,7 +84,7 @@ public class LocationVerify extends AppCompatActivity implements GoogleApiClient
             latitude = mLastLocation.getLatitude();
             longitude = mLastLocation.getLongitude();
 
-            Toast.makeText(getBaseContext(), "Lat : "+latitude+" Long : "+longitude, Toast.LENGTH_LONG).show();
+            //Toast.makeText(getBaseContext(), "Lat : "+latitude+" Long : "+longitude, Toast.LENGTH_LONG).show();
 
             dustbin_ref.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -93,13 +93,20 @@ public class LocationVerify extends AppCompatActivity implements GoogleApiClient
                     float dv = dataSnapshot.getValue(Float.class);
                     if(dv<20){
                         worker_ref.setValue(1);
-                        Toast.makeText(getBaseContext(), "Thank you", Toast.LENGTH_LONG).show();
+                        double dist = calculateDistanceInKilometer(12.97078, 79.15749, latitude, longitude);
+                        if(dist<1) {
+                            Toast.makeText(getBaseContext(), "Thank you", Toast.LENGTH_LONG).show();
+                            worker_ref.setValue("cleared");
+                        }
+                        else{
+                            Toast.makeText(getBaseContext(), "You are no where near the bin!", Toast.LENGTH_LONG).show();
+                        }
                         finish();
 
                     }
 
                     else{
-                        Toast.makeText(getBaseContext(), "You have not cleared the garbage"+dv, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), "You have not cleared the garbage", Toast.LENGTH_LONG).show();
                         finish();
                     }
 
@@ -172,6 +179,23 @@ public class LocationVerify extends AppCompatActivity implements GoogleApiClient
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
 
+    }
+
+    public final static double AVERAGE_RADIUS_OF_EARTH_KM = 6371;
+    public double calculateDistanceInKilometer(double userLat, double userLng,
+                                            double venueLat, double venueLng) {
+
+        double latDistance = Math.toRadians(userLat - venueLat);
+        double lngDistance = Math.toRadians(userLng - venueLng);
+
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(userLat)) * Math.cos(Math.toRadians(venueLat))
+                * Math.sin(lngDistance / 2) * Math.sin(lngDistance / 2);
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+//        return (int) (Math.round(AVERAGE_RADIUS_OF_EARTH_KM * c));
+        return AVERAGE_RADIUS_OF_EARTH_KM*c;
     }
 
 }
