@@ -96,9 +96,9 @@ public class DashBoardFragment extends Fragment {
 
                 try {
                     sensor_reading_MQ135 = dataSnapshot.getValue(Integer.class);
-                    if (sensor_reading_MQ135 > 100) {
+                    if (sensor_reading_MQ135 > 150) {
                         mq135_gauge.setPointStartColor(Color.YELLOW);
-                        if (sensor_reading_MQ135 > 120) {
+                        if (sensor_reading_MQ135 > 175) {
                             mq135_gauge.setPointStartColor(Color.RED);
                         }
 
