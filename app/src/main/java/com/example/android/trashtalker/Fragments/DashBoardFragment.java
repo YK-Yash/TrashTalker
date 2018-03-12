@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +28,7 @@ public class DashBoardFragment extends Fragment {
     DatabaseReference reference_mq135, reference_mq7;
     int sensor_reading_US, sensor_reading_MQ135, sensor_reading_MQ7;
     CustomGauge methane_gauge, mq135_gauge, mq7_gauge;
-    TextView methane_status_textview, methane_value_textview;
-    TextView carbonDioxide, meth;
+    TextView trash_value_textview, co2_lvl_textview, methane_level_textview;
 
 
     public static DashBoardFragment newInstance() {
@@ -49,14 +49,13 @@ public class DashBoardFragment extends Fragment {
 
         methane_gauge = view.findViewById(R.id.methane_gauge);
         methane_gauge.setStrokeColor(Color.WHITE);
-        methane_status_textview = view.findViewById(R.id.methane_status_textview);
-        methane_value_textview = view.findViewById(R.id.methane_value_textview);
+        co2_lvl_textview = view.findViewById(R.id.co2_level);
+        methane_level_textview = view.findViewById(R.id.methane_level);
+        trash_value_textview = view.findViewById(R.id.trash_level_value_textview);
         mq135_gauge = view.findViewById(R.id.co2_gauge);
         mq135_gauge.setStrokeColor(Color.WHITE);
         mq7_gauge = view.findViewById(R.id.nitrogen_gauge);
         mq7_gauge.setStrokeColor(Color.WHITE);
-        carbonDioxide = view.findViewById(R.id.cotxt);
-        meth = view.findViewById(R.id.methtxt);
 
         db = FirebaseDatabase.getInstance();
         reference_dustbinFull = db.getReferenceFromUrl("https://myapplication-d680d.firebaseio.com/Dustbins/D1");
@@ -68,19 +67,16 @@ public class DashBoardFragment extends Fragment {
                     sensor_reading_US = dataSnapshot.getValue(Integer.class);
                     if (sensor_reading_US > 75) {
                         methane_gauge.setPointStartColor(Color.YELLOW);
-                        methane_status_textview.setBackgroundColor(Color.YELLOW);
                         if (sensor_reading_US > 90) {
                             methane_gauge.setPointStartColor(Color.RED);
-                            methane_status_textview.setBackgroundColor(Color.RED);
                         }
 
                     } else {
                         methane_gauge.setPointStartColor(Color.GREEN);
-                        methane_status_textview.setBackgroundColor(Color.GREEN);
                     }
                     //int reading = Integer.valueOf(sensor_reading);
                     methane_gauge.setValue(sensor_reading_US);
-                    methane_value_textview.setText("" + sensor_reading_US);
+                    trash_value_textview.setText("" + sensor_reading_US);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -102,18 +98,16 @@ public class DashBoardFragment extends Fragment {
                     sensor_reading_MQ135 = dataSnapshot.getValue(Integer.class);
                     if (sensor_reading_MQ135 > 100) {
                         mq135_gauge.setPointStartColor(Color.YELLOW);
-                        carbonDioxide.setBackgroundColor(Color.YELLOW);
                         if (sensor_reading_MQ135 > 120) {
                             mq135_gauge.setPointStartColor(Color.RED);
-                            carbonDioxide.setBackgroundColor(Color.RED);
                         }
 
                     } else {
                         mq135_gauge.setPointStartColor(Color.GREEN);
-                        carbonDioxide.setBackgroundColor(Color.GREEN);
                     }
                     //int reading = Integer.valueOf(sensor_reading);
                     mq135_gauge.setValue(sensor_reading_MQ135);
+                    co2_lvl_textview.setText("" + sensor_reading_MQ135);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -132,21 +126,20 @@ public class DashBoardFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 try {
+                    Log.d("MQ7", "Updating values");
                     sensor_reading_MQ7 = dataSnapshot.getValue(Integer.class);
                     if (sensor_reading_MQ7 > 100) {
                         mq7_gauge.setPointStartColor(Color.YELLOW);
-                        meth.setBackgroundColor(Color.YELLOW);
                         if (sensor_reading_MQ7 > 120) {
                             mq7_gauge.setPointStartColor(Color.RED);
-                            meth.setBackgroundColor(Color.RED);
                         }
 
                     } else {
                         mq7_gauge.setPointStartColor(Color.GREEN);
-                        meth.setBackgroundColor(Color.GREEN);
                     }
                     //int reading = Integer.valueOf(sensor_reading);
                     mq7_gauge.setValue(sensor_reading_MQ7);
+                    methane_level_textview.setText("" + sensor_reading_MQ7);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
